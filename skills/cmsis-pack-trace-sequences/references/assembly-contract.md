@@ -16,6 +16,8 @@ Maintain exactly one target `<debugvars>` element and one target `<sequences tra
 
 Trace setup is device-level by default. Unless the user explicitly narrows scope, assemble it for all processors and all evidence-backed trace paths available in the selected device subtree; do not create separate default configurations merely because a device has multiple CPUs.
 
+Configure every evidenced trace path by default. When a documented runtime choice belongs to the end user, expose it through `debugvars` with a supported default and propose matching Configuration Wizard annotations in `.dbgconf`; do not require the user to select which evidenced paths to generate.
+
 ```xml
 <!-- CMSIS-PACK-TRACE: ADD-DEVICE-SPECIFIC-HERE BEGIN -->
 <!-- CMSIS-PACK-TRACE: ADD-DEVICE-SPECIFIC-HERE END -->
@@ -32,6 +34,8 @@ TraceCapture: ADD-DEVICE-SPECIFIC-HERE -> mode-specific CoreSight capture helper
 TraceFlush:   mode-specific CoreSight flush/read helpers -> ADD-DEVICE-SPECIFIC-HERE
 TraceStop:    mode-specific CoreSight stop helpers -> ADD-DEVICE-SPECIFIC-HERE
 ```
+
+When device documentation shows that reset can clear or change trace-clock configuration, consider adding the evidence-backed clock reprogramming to `TraceStart`'s device-specific region, before the mode-specific CoreSight start helpers. This complements any documented pre-auto-detection enablement in `DebugDeviceUnlock`; do not assume one survives reset or duplicate an operation without a reset/lifecycle reason.
 
 The debugger is expected to call `TraceFlush` before `TraceStop` so trace data is drained before stopping. `DoTraceFlush_<mode>` helpers are reusable from other verified sequences, but `TraceStop` and `DoTraceStop_<mode>` helpers must not call `DoTraceFlush` or any `DoTraceFlush_<mode>` helper again.
 
@@ -78,7 +82,7 @@ The XML assets use a wrapper element only to remain well-formed standalone files
 
 A selected component asset is the source template for its operations, not an illustrative example. Copy its comments, `__var` declarations, checks, control blocks, waits, cleanup, and sequence bodies into the generated PDSC. Do not handwrite a replacement sequence when that selected asset provides the operation.
 
-For every selected asset, add a line-level merge checklist to `.agent-artifacts/<pdsc-stem>.trace-sequences.md` that identifies every retained, changed, and omitted line or block. Every change or omission requires a documented device-specific evidence reason. Before handoff, compare each generated fragment to the corresponding selected asset after normalizing approved instance suffixes and evidence-backed substituted values. Flag a missing comment, variable declaration, control block, wait, or cleanup as a validation failure unless the checklist records its evidence-backed omission. Never simplify for brevity, even when the XML is schema-valid.
+For every selected asset, add a line-level merge checklist to `.agent-artifacts/<pdsc-stem>.trace-sequences.md` that identifies every retained, changed, and omitted line or block. Every change or omission requires a documented device-specific evidence reason. Before completion, compare each generated fragment to the corresponding selected asset after normalizing approved instance suffixes and evidence-backed substituted values. Flag a missing comment, variable declaration, control block, wait, or cleanup as a validation failure unless the checklist records its evidence-backed omission. Never simplify for brevity, even when the XML is schema-valid.
 
 Format generated sequence fragments for review: matching XML tags align; C-like text starts on the line after `<block>`, is indented one level inside it, and uses one statement per semicolon-terminated line. Do not split XML entities such as `&amp;`.
 
@@ -90,7 +94,7 @@ Put each high-level routing sequence's `__var` declarations in its opening `<blo
 
 When a retained scaffolding sequence has no C-like content other than its standard trace-mode `__var` declarations, put `<!-- No trace operation is required for this mode. -->` after its opening `<block>`. Remove this comment when a component call or device-specific operation is added.
 
-Treat one-line `<block>` bodies and multiple C-like semicolon-terminated statements on one line as validation failures. Before handoff, validate XML/PDSC syntax and run:
+Treat one-line `<block>` bodies and multiple C-like semicolon-terminated statements on one line as validation failures. Before completion, validate XML/PDSC syntax and run:
 
 ```text
 rg -n '<block>.*;</block>' <target.pdsc>
@@ -106,4 +110,4 @@ Write `.agent-artifacts/<pdsc-stem>.trace-sequences.md` at the project root. Rec
 
 `.agent-artifacts/` files are agent-owned and may be created or updated without user confirmation. Before changing an existing user-owned PDSC or another existing user file, present the proposed change and obtain user confirmation.
 
-After the user confirms all trace-path choices, generate, apply, and validate the complete XML in the same turn. Do not stop after updating the assembly record unless missing evidence or a validation failure blocks completion.
+After the user confirms the proposed trace configuration, generate, apply, and validate the complete XML in the same turn. Do not stop after updating the assembly record unless missing evidence or a validation failure blocks completion.

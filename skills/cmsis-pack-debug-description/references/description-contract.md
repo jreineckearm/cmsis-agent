@@ -8,6 +8,8 @@ Translate only verified topology facts into inherited/local non-sequence PDSC de
 
 Apply verified `dbg_datapatch` entries, including their location, value or payload, applicability, and workaround. Preserve trace-owned `debugvars` and all sequences. Do not use `__` as a prefix for DFP-defined local sequence variables.
 
+Configure every evidenced definition by default. When a documented non-trace runtime choice belongs to the end user, expose it as a `debugvars` `__var` with a supported default and propose matching Configuration Wizard annotations in `.dbgconf`. Do not use `debugvars` to defer a missing hardware fact or to choose which evidenced definition to emit.
+
 Place a shared definition at the highest selected common device-tree ancestor; place a deviation only on its outer leaf variant. Preserve unrelated PDSC content.
 
 ## Confirmation and validation

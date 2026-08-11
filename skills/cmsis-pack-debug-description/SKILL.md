@@ -10,5 +10,5 @@ Apply verified non-sequence debug-description definitions to an existing DFP. `$
 ## Entry and progressive workflow
 
 1. Find the target `.pdsc`, selected family/subFamily/device/variant scope, affected `<processor>` descriptions, and `.agent-artifacts/<pdsc-stem>.debug-topology.md` produced by `$cmsis-pack-topology-evidence`. Do not create a new DFP and do not continue if no device description exists.
-2. Require a current topology record covering the selected connection and requested trace prerequisites. If it is absent, blocked, stale, contradictory, or insufficient, return to `$cmsis-pack-topology-evidence`.
+2. Require a current topology record covering the selected connection and identified trace prerequisites. If it is absent, blocked, stale, contradictory, or insufficient, return to `$cmsis-pack-topology-evidence`.
 3. Before editing, read `references/description-contract.md`. Load only the target PDSC, selected device subtree, and relevant topology-record rows. Do not load non-trace sequence records or trace component assets in this skill.
