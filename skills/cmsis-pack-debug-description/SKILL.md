@@ -1,14 +1,14 @@
 ---
 name: cmsis-pack-debug-description
-description: Inspect and create evidence-backed non-trace CMSIS-Pack Debug Description content in an existing Device Family Pack (DFP). Use when a PDSC needs debug, debugconfig, dbg_datapatch, debugvars, debug-port, access-port, or device debug-sequence definitions; when DP/AP/CoreSight topology is incomplete; or before generating CMSIS-Pack trace sequences.
+description: Add or review non-sequence CMSIS-Pack Debug Description content in an existing Device Family Pack PDSC. Use for debug, debugconfig, dbg_datapatch, non-trace debugvars, debug-port, or access-port definitions after `$cmsis-pack-topology-evidence` has established the required topology. Do not collect topology evidence, implement device debug sequences, or generate CoreSight trace sequences.
 ---
 
 # CMSIS-Pack debug description
 
-Create a verified debug-description foundation for an existing DFP. Device-specific non-trace sequences belong to `$cmsis-pack-debug-sequences`; trace sequence generation belongs to `$cmsis-pack-trace-sequences`.
+Apply verified non-sequence debug-description definitions to an existing DFP. `$cmsis-pack-topology-evidence` owns the upstream topology record; device-specific non-trace sequences belong to `$cmsis-pack-debug-sequences`; trace sequence generation belongs to `$cmsis-pack-trace-sequences`.
 
 ## Entry and progressive workflow
 
-1. Find the target `.pdsc`, selected family/subFamily/device/variant scope, and affected `<processor>` descriptions. Do not create a new DFP and do not continue if no device description exists.
-2. After identifying the target and before gathering evidence or editing, read `references/evidence-contract.md`. It owns the topology inventory, evidence process, review record, PDSC placement, confirmation, validation, and trace handoff gate.
-3. Load only the target PDSC, selected device subtree, and evidence relevant to the requested connection or trace path. Do not load non-trace sequence records or trace component assets in this skill.
+1. Find the target `.pdsc`, selected family/subFamily/device/variant scope, affected `<processor>` descriptions, and `.agent-artifacts/<pdsc-stem>.debug-topology.md` produced by `$cmsis-pack-topology-evidence`. Do not create a new DFP and do not continue if no device description exists.
+2. Require a current topology record covering the selected connection and requested trace prerequisites. If it is absent, blocked, stale, contradictory, or insufficient, return to `$cmsis-pack-topology-evidence`.
+3. Before editing, read `references/description-contract.md`. Load only the target PDSC, selected device subtree, and relevant topology-record rows. Do not load non-trace sequence records or trace component assets in this skill.

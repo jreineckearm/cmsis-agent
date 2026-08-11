@@ -1,11 +1,11 @@
 ---
 name: cmsis-pack-debug-setup
-description: Coordinate evidence-backed CMSIS-Pack debug setup in an existing Device Family Pack PDSC, then prepare a compact handoff for a separate CoreSight trace-sequence turn. Use for end-to-end debug setup across connection topology, data patches, non-trace device behavior, and CoreSight trace.
+description: Coordinate evidence-backed CMSIS-Pack debug setup in an existing Device Family Pack PDSC, then prepare a compact handoff for a separate CoreSight trace-sequence turn. Use for end-to-end debug setup across topology evidence, non-sequence debug description, data patches, non-trace device behavior, and CoreSight trace. Start with `$cmsis-pack-topology-evidence`.
 ---
 
 # CMSIS-Pack debug setup
 
-Coordinate the debug-description and optional non-trace sequence phases without duplicating specialist rules or output. For trace work, produce a compact handoff and stop; `$cmsis-pack-trace-sequences` owns the later trace turn and its PDSC confirmation.
+Coordinate topology evidence, debug-description, and optional non-trace sequence phases without duplicating specialist rules or output. Start with `$cmsis-pack-topology-evidence`. For trace work, produce a compact handoff and stop; `$cmsis-pack-trace-sequences` owns the later trace turn and its PDSC confirmation.
 
 ## Entry and progressive workflow
 

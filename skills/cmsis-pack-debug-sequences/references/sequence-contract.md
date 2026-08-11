@@ -2,7 +2,7 @@
 
 ## Scope and evidence
 
-Reuse `.agent-artifacts/<pdsc-stem>.debug-topology.md`: cross-check selected scope, processors, DP/AP/APID mappings, inherited definitions, and device behavior. Create `.agent-artifacts/<pdsc-stem>.debug-sequences.md` without confirmation. Record the topology reference, scope, processors, inherited sequences, proposed names, placement and descendants, evidence, default-implementation provenance, and open questions. If the topology lacks required connection facts, return to `$cmsis-pack-debug-description`.
+Reuse the read-only `.agent-artifacts/<pdsc-stem>.debug-topology.md` from `$cmsis-pack-topology-evidence`: cross-check selected scope, processors, DP/AP/APID mappings, inherited definitions, and device behavior. Create `.agent-artifacts/<pdsc-stem>.debug-sequences.md` without confirmation. Record the topology reference, scope, processors, inherited sequences, proposed names, placement and descendants, evidence, default-implementation provenance, and open questions. If the topology lacks required connection facts, return to `$cmsis-pack-topology-evidence`.
 
 Browse the current official Open-CMSIS-Pack *Debug Description* specification and relevant linked pages before implementation. Use it as the authority for XML grammar, predefined names, execution context, and default implementations. Search device documentation, vendor packs, SVDs, debug scripts, and source code for device-specific facts.
 

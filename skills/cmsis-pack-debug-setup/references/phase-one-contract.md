@@ -1,10 +1,10 @@
 # Debug setup phase-one contract
 
-Run `$cmsis-pack-debug-description` first. Establish or update `.agent-artifacts/<pdsc-stem>.debug-topology.md` with processors, DP/AP/APID mappings, connection models, `debug`/`debugconfig`, `dbg_datapatch`, `debugvars`, and prerequisites.
+Run `$cmsis-pack-topology-evidence` first. It is the only phase that establishes or updates `.agent-artifacts/<pdsc-stem>.debug-topology.md` with processors, DP/AP/APID mappings, connection models, and trace prerequisites. Run `$cmsis-pack-debug-description` next for verified non-sequence PDSC elements.
 
 Run `$cmsis-pack-debug-sequences` only for verified non-trace behavior such as unlock, debug clocks, reset, bootloader, flash, debug authentication, or multi-core startup. It is optional for trace unless required before trace components can be discovered or accessed.
 
-Keep ownership strict: `$cmsis-pack-debug-description` owns non-sequence Debug Description elements and topology evidence; `$cmsis-pack-debug-sequences` owns device-specific non-trace sequences; `$cmsis-pack-trace-sequences` owns trace `debugvars` and sequences. Do not duplicate, overwrite, or move another skill's content merely to consolidate XML.
+Keep ownership strict: `$cmsis-pack-topology-evidence` owns topology evidence and the readiness gate; `$cmsis-pack-debug-description` owns non-sequence Debug Description elements; `$cmsis-pack-debug-sequences` owns device-specific non-trace sequences; `$cmsis-pack-trace-sequences` owns trace `debugvars` and sequences. All downstream skills treat `debug-topology.md` as read-only. Do not duplicate, overwrite, or move another skill's content merely to consolidate XML.
 
 When trace is requested and topology is `READY FOR TRACE`, create `.agent-artifacts/<pdsc-stem>.trace-input.md`. Include only the PDSC path; selected scope and descendants; topology-record path and status; processor `Pname` and DP/AP/APID paths; requested or evidenced trace paths; required CoreSight instances with type, address, AP, role, and mode; relevant `debug`/`debugconfig` and non-trace prerequisites; concise evidence citations; and unresolved items. Do not copy raw documents, PDSC XML, component templates, or the full non-trace sequence record.
 

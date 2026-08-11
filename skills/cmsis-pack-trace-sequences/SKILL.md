@@ -1,6 +1,6 @@
 ---
 name: cmsis-pack-trace-sequences
-description: Add modular, evidence-backed CoreSight trace sequences to an existing CMSIS Device Family Pack PDSC. Use after CMSIS-Pack debug topology is defined, when assembling per-component trace snippets into TraceStart, TraceCapture, TraceFlush, and TraceStop sequences, or when maintaining trace setup with device-specific extension placeholders.
+description: Add modular, evidence-backed CoreSight trace sequences to an existing CMSIS Device Family Pack PDSC. Use after `$cmsis-pack-topology-evidence` has produced a READY FOR TRACE topology record, when assembling per-component trace snippets into TraceStart, TraceCapture, TraceFlush, and TraceStop sequences, or when maintaining trace setup with device-specific extension placeholders.
 ---
 
 # CMSIS-Pack trace sequences
@@ -10,7 +10,7 @@ Assemble modular CoreSight trace snippets into an existing PDSC. When `.agent-ar
 ## Preconditions
 
 1. Find the target PDSC, selected family/subFamily/device/variant scope, and `.agent-artifacts/<pdsc-stem>.trace-input.md` when it exists. Require its referenced topology record to be `READY FOR TRACE`, and cross-check only its selected component instances, addresses, DP/AP paths, recorded placement scope, and explicit `debugconfig`/`debug` elements against the PDSC. Treat this manifest as the complete topology input; do not load the full topology or non-trace sequence record unless the manifest is absent, stale, contradictory, or insufficient for the requested trace path.
-2. If no trace-input manifest exists, use the matching `.agent-artifacts/<pdsc-stem>.debug-topology.md` review record and require `Status: READY FOR TRACE`. If it is absent, blocked, stale, or insufficient for the requested path, stop and direct the user to `$cmsis-pack-debug-description`.
+2. If no trace-input manifest exists, use the matching read-only `.agent-artifacts/<pdsc-stem>.debug-topology.md` review record from `$cmsis-pack-topology-evidence` and require `Status: READY FOR TRACE`. If it is absent, blocked, stale, or insufficient for the requested path, stop and direct the user to `$cmsis-pack-topology-evidence`.
 3. Generate and maintain the target `<sequences traceSetup="full">` configuration. Do not generate `legacy` trace setup; if the existing PDSC declares `legacy`, report that it will be converted to `full` as part of the trace change.
 4. Treat trace setup as device-level by default, not CPU-level. Unless the user explicitly narrows the scope, consider all processors in the selected device subtree and every evidence-backed trace path the device supports, including SWO, synchronous trace, and trace-buffer variants.
 
